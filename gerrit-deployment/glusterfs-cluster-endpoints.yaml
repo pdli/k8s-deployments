@@ -1,0 +1,10 @@
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: glusterfs-cluster
+subsets:
+  - addresses:
+      - ip: 16.250.45.49 # c9t26468.itcs.hpecorp.net
+      - ip: 16.250.53.71 # c9t26469.itcs.hpecorp.net
+    ports:
+      - port: 24007
