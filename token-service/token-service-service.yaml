@@ -1,0 +1,30 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: token-service
+  labels:
+    app: token-service
+spec:
+  ports:
+  - name: ssh
+    nodePort: 30022
+    port: 22
+    protocol: TCP
+    targetPort: 22
+  - name: admin
+    nodePort: 30500
+    port: 5000
+    protocol: TCP
+    targetPort: 5000
+  - name: main
+    nodePort: 30357
+    port: 35357
+    protocol: TCP
+    targetPort: 35357
+  selector:
+    app: token-service
+  type: NodePort

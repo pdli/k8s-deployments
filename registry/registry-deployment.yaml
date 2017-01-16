@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: registry
+  labels:
+    app: registry
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: registry
+    spec:
+      containers:
+      - image: registry:2
+        name: registry
+        env:
+        - name: REGISTRY_HTTP_TLS_CERTIFICATE
+          value: /certs/c9t26283.itcs.hpecorp.net.crt
+        - name: REGISTRY_HTTP_TLS_KEY
+          value: /certs/c9t26283.itcs.hpecorp.net.key
+        ports:
+        - containerPort: 5000
+          name: registry
+        volumeMounts:
+        - name: registry-storage
+          mountPath: /var/lib/registry
+        - name: certs-storage
+          mountPath: /certs
+      volumes:
+      - name: registry-storage
+        glusterfs:
+          endpoints: glusterfs-cluster
+          path: registry-storage
+      - name: certs-storage
+        persistentVolumeClaim:
+          claimName: nfs-certs
