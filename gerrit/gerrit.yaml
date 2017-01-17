@@ -1,3 +1,6 @@
+# include Deployment & Service
+
+# Deployment
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -73,3 +76,30 @@ spec:
         glusterfs:
           endpoints: glusterfs-cluster
           path: gerrit-glusterfs
+
+# Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: gerrit
+  name: gerrit-service
+  namespace: default
+spec:
+  ports:
+  - name: port-1
+    nodePort: 30113
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  - name: port-2
+    nodePort: 30828
+    port: 29418
+    protocol: TCP
+    targetPort: 29418
+  selector:
+    app: gerrit
+    tier: gerrit
+  sessionAffinity: None
+  type: NodePort
