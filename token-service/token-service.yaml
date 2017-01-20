@@ -1,0 +1,57 @@
+# token-service deployment & service yaml
+
+# deployemnt
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: token-service
+  labels:
+    app: token-service
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: token-service
+    spec:
+      containers:
+      - image: wsfdl/token-service
+        name: token-service
+        ports:
+        - containerPort: 22
+          name: ssh
+        - containerPort: 5000
+          name: admin
+        - containerPort: 35357
+          name: main
+
+# service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: token-service
+  labels:
+    app: token-service
+spec:
+  ports:
+  - name: ssh
+    nodePort: 30022
+    port: 22
+    protocol: TCP
+    targetPort: 22
+  - name: admin
+    nodePort: 30500
+    port: 5000
+    protocol: TCP
+    targetPort: 5000
+  - name: main
+    nodePort: 30357
+    port: 35357
+    protocol: TCP
+    targetPort: 35357
+  selector:
+    app: token-service
+  type: NodePort
