@@ -1,3 +1,6 @@
+# mysql storage
+
+# PV
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -8,9 +11,18 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    # FIXME: use the right IP
     server: c9t26470.itcs.hpecorp.net
-    # path: "/opt/mount1/nfs/gerrit"
-    # server: localhost 
     path: "/opt/mount1/nfs/mysql"
-    # path: "/mnt/nfs"
+
+# PVC
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nfs-mysql
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
