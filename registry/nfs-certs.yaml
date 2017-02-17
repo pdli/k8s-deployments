@@ -1,3 +1,4 @@
+# Persistent Volume
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -10,3 +11,15 @@ spec:
   nfs:
     server: c9t26470.itcs.hpecorp.net
     path: "/opt/mount1/nfs/certs"
+
+# Persistence Volume Claim
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nfs-certs
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi

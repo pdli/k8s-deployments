@@ -18,7 +18,7 @@ spec:
         tier: gerrit 
     spec:
       containers:
-      - image: tyrionhuang/vpc-gerrit:latest
+      - image: tyrionhuang/vpc-gerrit:1.0
         name: gerrit 
         env:
           # $ kubectl create secret generic mysql-pass --from-file=password.txt
@@ -52,7 +52,7 @@ spec:
         - name: LDAP_ACCOUNTSSHUSERNAME
           value: ${mail.localPart}
         - name: WEBURL
-          value: http://c9t26283.itcs.hpecorp.net:30113
+          value: http://vpc-gerrit.itcs.hpecorp.net:8080
         - name: LISTEN_ADDR
           value: "*:29418"
         - name: ADVERTISED_ADDR
@@ -60,7 +60,7 @@ spec:
         - name: SMTP_SERVER
           value: c9t21382.itcs.hpecorp.net
         - name: SMTP_FROM
-          value: "(Gerrit Code Review) <gerrit@c9t26323.itcs.hpecorp.net>"
+          value: "(Gerrit Code Review) <gerrit@vpc-gerrit.itcs.hpecorp.net>"
         - name: GERRIT_INIT_ARGS
           value: " --install-plugin=download-commands --install-plugin=replication --install-plugin=reviewnotes --install-plugin=singleusergroup --install-plugin=commit-message-length-validator"
         ports:
